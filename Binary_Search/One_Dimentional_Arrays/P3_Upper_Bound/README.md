@@ -1,34 +1,16 @@
-# Implement Upper Bound
-
-### Problem Statement
-You are given a sorted array ‘arr’ containing ‘n’ integers and an integer ‘x’.Implement the ‘upper bound’ function to find the index of the upper bound of 'x' in the array.
-
-### Note:
-- The upper bound in a sorted array is the index of the first value that is greater than a given value. 
-- If the greater value does not exist then the answer is 'n', Where 'n' is the size of the array.
-- Try to write a solution that runs in log(n) time complexity.
-
-
-### Input
-
-    5 7
-    1 4 7 8 10
-
-### Output
-
-    3
-
-### Constraints
-- 1 <= ‘n’ <= 10^5
-- 1 <= ‘x’ <= 10^9
-- 1 <= ‘arr[i]’ <= 10^9
-
-#### Time Limit: 
-    1 sec
-
-### Examples
-
-#### Example 1
-- **Input**: ‘arr’ = {2,4,6,7} and ‘x’ = 5,
-- **Output**: 2
-- **Explanation**: The upper bound of 5 is 6 in the given array, which is at index 2 (0-indexed).
+<h2><a href="https://www.geeksforgeeks.org/problems/implement-upper-bound/0">Implement Upper Bound</a></h2><h3>Difficulty Level : Difficulty: Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p dir="ltr" style="box-sizing: border-box; margin: 0px 0px 10px; padding: 0px; border: 0px; font-size: 18px; vertical-align: baseline; color: #273239; font-family: Nunito, sans-serif; letter-spacing: 0.162px; background-color: #ffffff;"><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">Given a&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">sorted&nbsp;</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">array&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">arr[]&nbsp;</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">and a number&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">target</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">, the task is to find the&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">upper</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;"> bound&nbsp;of the&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">target</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">&nbsp;in this given array. </span></p>
+<blockquote>
+<p dir="ltr" style="box-sizing: border-box; margin: 0px 0px 10px; padding: 0px; border: 0px; font-size: 18px; vertical-align: baseline; color: #273239; font-family: Nunito, sans-serif; letter-spacing: 0.162px; background-color: #ffffff;"><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">The&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">upper bound</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">&nbsp;of a number is defined as the smallest&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">index</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">&nbsp;in the sorted array where the element is greater than the given number.</span></p>
+</blockquote>
+<p dir="ltr" style="box-sizing: border-box; margin: 0px 0px 10px; padding: 0px; border: 0px; font-size: 18px; vertical-align: baseline; color: #273239; font-family: Nunito, sans-serif; letter-spacing: 0.162px; background-color: #ffffff;"><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">Note:</span><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">&nbsp;If all the elements in the given array are smaller than or equal to the&nbsp;</span><strong style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">target</strong><span style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline;">, the upper bound will be the length of the array.</span></p>
+<p><span style="font-size: 14pt;"><strong>Examples :</strong></span></p>
+<pre><span style="font-size: 14pt;"><strong>Input: </strong> arr[] = [2, 3, 7, 10, 11, 11, 25], target = 9
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> 3 is the smallest index in arr[], at which element (arr[3] = 10) is larger than 9.</span></pre>
+<pre><span style="font-size: 14pt;"><strong>Input:</strong> arr[] = [2, 3, 7, 10, 11, 11, 25], target = 11
+<strong>Output:</strong> 6
+<strong>Explanation:</strong> 6 is the smallest index in arr[], at which element (arr[6] = 25) is larger than 11.<br></span></pre>
+<pre><span style="font-size: 14pt;"><strong>Input:</strong> arr[] = [2, 3, 7, 10, 11, 11, 25], target = 100
+<strong>Output:</strong> 7
+<strong>Explanation:</strong> As no element in arr[] is greater than 100, return the length of array.</span></pre>
+<p><span style="font-size: 14pt;"><strong>Constraints:</strong><br>1 ≤ arr.size() ≤ 10<sup>6</sup><br>1 ≤ arr[i] ≤ 10<sup>6</sup><br>1 ≤ target ≤ 10<sup>6</sup></span></p></div><br><p><span style=font-size:18px><strong>Topic Tags : </strong><br><code>Binary Search</code>&nbsp;<code>Arrays</code>&nbsp;<code>Algorithms</code>&nbsp;

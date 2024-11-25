@@ -3,36 +3,49 @@ package Binary_Search.One_Dimentional_Arrays.P3_Upper_Bound;
 public class Implement_Upper_Bound {
     public static void main(String[] args) {
         int[] arr = { 2, 4, 6, 7 };
-        int n = 4;
         int x = 5;
-        int uBound = upperBound(arr, n, x);
-        System.out.println(uBound);
+
+        int uBoundBruteForce = upperBoundBruteForce(arr, x);
+        System.out.println(uBoundBruteForce);
+
+        int uBoundOptimal = upperBoundOptimal(arr, x);
+        System.out.println(uBoundOptimal);
     }
 
     /**
-     * We need to find index such that arr[i] > x (strictly greater)
+     * Using Optimal Approach (Binary Search)
      * 
      * TC: O(log(N))
      * SC: O(1)
-     * 
-     * @param arr
-     * @param x
-     * @param n
-     * @return
      */
-    public static int upperBound(int[] arr, int x, int n) {
+    private static int upperBoundOptimal(int[] arr, int target) {
+        int n = arr.length;
         int low = 0;
         int high = n - 1;
-        int answer = n;
-        while (low <= high) {
+        while (low <= high) { // TC: O(log(N))
             int mid = low + (high - low) / 2;
-            if (arr[mid] > x) {
-                answer = mid;
+            if (arr[mid] > target) {
                 high = mid - 1;
             } else {
                 low = mid + 1;
             }
         }
-        return answer;
+        return low;
+    }
+
+    /**
+     * Using Brute-Force Approach
+     * 
+     * TC: O(N)
+     * SC: O(1)
+     */
+    private static int upperBoundBruteForce(int[] arr, int target) {
+        int n = arr.length;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            if (arr[i] > target) {
+                return i;
+            }
+        }
+        return n;
     }
 }
