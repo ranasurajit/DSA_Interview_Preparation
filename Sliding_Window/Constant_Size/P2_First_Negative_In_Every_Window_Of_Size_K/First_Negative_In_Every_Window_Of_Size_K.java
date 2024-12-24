@@ -17,7 +17,7 @@ public class First_Negative_In_Every_Window_Of_Size_K {
      * Took two pointers i and j = 0 and increment j till window size of 'k' is
      * reached
      * 
-     * add arr[i] < 0 to a Deque as we can add and remove from both ends of it
+     * add arr[j] < 0 to a Deque as we can add and remove from both ends of it
      * 
      * Window size: (j - i + 1)
      * 
