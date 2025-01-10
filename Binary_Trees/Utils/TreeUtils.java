@@ -12,14 +12,14 @@ public class TreeUtils {
         public TreeNode left;
         public TreeNode right;
 
-        TreeNode() {
+        public TreeNode() {
         }
 
-        TreeNode(int val) {
+        public TreeNode(int val) {
             this.val = val;
         }
 
-        TreeNode(int val, TreeNode left, TreeNode right) {
+        public TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
             this.left = left;
             this.right = right;
@@ -89,5 +89,17 @@ public class TreeUtils {
         }
 
         return result.toArray(new Integer[0]);
+    }
+
+    public static TreeNode getTreeNode() {
+        return new TreeNode();
+    }
+
+    public static TreeNode getTreeNode(int val) {
+        return new TreeNode(val);
+    }
+
+    public static TreeNode getTreeNode(int val, TreeNode left, TreeNode right) {
+        return new TreeNode(val, left, right);
     }
 }
