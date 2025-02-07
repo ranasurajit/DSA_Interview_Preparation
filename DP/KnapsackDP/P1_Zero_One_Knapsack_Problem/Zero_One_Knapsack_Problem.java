@@ -1,7 +1,5 @@
 package DP.KnapsackDP.P1_Zero_One_Knapsack_Problem;
 
-import java.util.Arrays;
-
 public class Zero_One_Knapsack_Problem {
     public static void main(String[] args) {
         int capacity = 7;
@@ -23,29 +21,31 @@ public class Zero_One_Knapsack_Problem {
      * TC: O(N x W)
      * SC: O(N x W)
      */
-    private static int knapSackTabulation(int w, int val[], int wt[]) {
+    private static int knapSackTabulation(int capacity, int val[], int wt[]) {
         int n = wt.length;
-        // return solveRecursion(n - 1, capacity, val, wt);
-        int[][] dp = new int[n + 1][w + 1];
-        // base case in Recursion is converted to Initialization in Tabulation
+        // Initialization - replicating Base case below
+        int[][] dp = new int[n + 1][capacity + 1];
         for (int i = 0; i < n + 1; i++) {
-            for (int j = 0; j < w + 1; j++) {
+            for (int j = 0; j < capacity + 1; j++) {
                 if (i == 0 || j == 0) {
                     dp[i][j] = 0;
                 }
             }
         }
+        // Replicating Iteration of below Recursion call and interchange (n, maxWeight)
+        // as (i, j)
         for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < w + 1; j++) {
-                // convert index to (i - 1) and w to j
+            for (int j = 1; j < capacity + 1; j++) {
                 if (wt[i - 1] <= j) {
-                    dp[i][j] = Math.max(val[i - 1] + dp[i - 1][j - wt[i - 1]], dp[i - 1][j]);
+                    int pick = val[i - 1] + dp[i - 1][j - wt[i - 1]];
+                    int notpick = dp[i - 1][j];
+                    dp[i][j] = Math.max(pick, notpick);
                 } else {
                     dp[i][j] = dp[i - 1][j];
                 }
             }
         }
-        return dp[n][w];
+        return dp[n][capacity];
     }
 
     /**
@@ -56,12 +56,13 @@ public class Zero_One_Knapsack_Problem {
      */
     private static int knapSackMemoization(int capacity, int val[], int wt[]) {
         int n = wt.length;
-        // return solveRecursion(n - 1, capacity, val, wt);
         int[][] dp = new int[n + 1][capacity + 1];
-        for (int[] dp1D : dp) {
-            Arrays.fill(dp1D, -1);
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < capacity + 1; j++) {
+                dp[i][j] = -1;
+            }
         }
-        return solveMemoization(n - 1, capacity, val, wt, dp);
+        return solveMemoization(wt, val, n, capacity, dp);
     }
 
     /**
@@ -70,32 +71,23 @@ public class Zero_One_Knapsack_Problem {
      * TC: O(N x W)
      * SC: O(N x W + N)
      */
-    private static int solveMemoization(int index, int w, int val[], int wt[], int[][] dp) {
-        // base case - minimum valid testcase
-        if (w == 0) {
+    private static int solveMemoization(int[] wt, int[] val, int n, int w, int[][] dp) {
+        // Base case
+        if (n == 0 || w == 0) {
             return 0;
         }
-        if (index == 0) {
-            return wt[0] <= w ? val[0] : 0;
+        if (dp[n][w] != -1) {
+            return dp[n][w];
         }
-        if (dp[index][w] != -1) {
-            return dp[index][w];
-        }
-        /**
-         * if wt[index] <= w, i.e current weight is less than
-         * capacity 'w' then we have two choices
-         * 1. to pick
-         * 2. not to pick
-         * 
-         * so we need to take maximum of them to fill the knapsack
-         */
-        if (wt[index] <= w) {
-            return dp[index][w] = Math.max(
-                    val[index] + solveMemoization(index - 1, w - wt[index], val, wt, dp),
-                    solveMemoization(index - 1, w, val, wt, dp));
+        // Recursion call
+        if (wt[n - 1] <= w) {
+            // here we can decide to include or exclude the (n - 1)th item
+            int pick = val[n - 1] + solveMemoization(wt, val, n - 1, w - wt[n - 1], dp);
+            int notpick = solveMemoization(wt, val, n - 1, w, dp);
+            return dp[n][w] = Math.max(pick, notpick);
         } else {
-            // we have no option to pick this
-            return dp[index][w] = solveMemoization(index - 1, w, val, wt, dp);
+            // we cannot include (n - 1)th item as it exceeds maxWeight/capacity of knapsack
+            return dp[n][w] = solveMemoization(wt, val, n - 1, w, dp);
         }
     }
 
@@ -107,7 +99,7 @@ public class Zero_One_Knapsack_Problem {
      */
     private static int knapSackRecursion(int capacity, int val[], int wt[]) {
         int n = wt.length;
-        return solveRecursion(n - 1, capacity, val, wt);
+        return solveRecursion(wt, val, n, capacity);
     }
 
     /**
@@ -116,29 +108,20 @@ public class Zero_One_Knapsack_Problem {
      * TC: O(2 ^ N)
      * SC: O(2 ^ N)
      */
-    private static int solveRecursion(int index, int w, int val[], int wt[]) {
-        // base case - minimum valid testcase
-        if (w == 0) {
+    private static int solveRecursion(int[] wt, int[] val, int n, int w) {
+        // Base case
+        if (n == 0 || w == 0) {
             return 0;
         }
-        if (index == 0) {
-            return wt[0] <= w ? val[0] : 0;
-        }
-        /**
-         * if wt[index] <= w, i.e current weight is less than
-         * capacity 'w' then we have two choices
-         * 1. to pick
-         * 2. not to pick
-         * 
-         * so we need to take maximum of them to fill the knapsack
-         */
-        if (wt[index] <= w) {
-            return Math.max(
-                    val[index] + solveRecursion(index - 1, w - wt[index], val, wt),
-                    solveRecursion(index - 1, w, val, wt));
+        // Recursion call
+        if (wt[n - 1] <= w) {
+            // here we can decide to include or exclude the (n - 1)th item
+            int pick = val[n - 1] + solveRecursion(wt, val, n - 1, w - wt[n - 1]);
+            int notpick = solveRecursion(wt, val, n - 1, w);
+            return Math.max(pick, notpick);
         } else {
-            // we have no option to pick this
-            return solveRecursion(index - 1, w, val, wt);
+            // we cannot include (n - 1)th item as it exceeds maxWeight/capacity of knapsack
+            return solveRecursion(wt, val, n - 1, w);
         }
     }
 }
