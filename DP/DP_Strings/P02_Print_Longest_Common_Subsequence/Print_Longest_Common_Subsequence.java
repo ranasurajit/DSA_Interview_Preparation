@@ -9,8 +9,16 @@ public class Print_Longest_Common_Subsequence {
         String s1 = "abcab";
         String s2 = "cbab";
 
-        String lcsString = solution.findLCS(n, m, s1, s2);
-        System.out.println(lcsString);
+        String lcsString1 = solution.findLCS(n, m, s1, s2);
+        System.out.println(lcsString1);
+
+        n = 3;
+        m = 3;
+        String s3 = "xyz";
+        String s4 = "abc";
+
+        String lcsString2 = solution.findLCS(n, m, s3, s4);
+        System.out.println(lcsString2);
     }
 
     /**
