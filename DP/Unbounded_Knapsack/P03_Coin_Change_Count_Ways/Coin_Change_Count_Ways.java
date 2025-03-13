@@ -17,38 +17,61 @@ public class Coin_Change_Count_Ways {
 
         int maximumValueTabulation = solution.countTabulation(coins, sum);
         System.out.println(maximumValueTabulation);
+
+        int maximumValueOptimization = solution.countOptimization(coins, sum);
+        System.out.println(maximumValueOptimization);
     }
 
     /**
-     * Using Tabulation
+     * Approach IV : Using Space Optimization Approach
      * 
-     * TC: O(N x W + N)
-     * SC: O(N x W)
+     * TC: O(N x S)
+     * SC: O(2 x S) ~ O(S)
      * 
-     * @param coins
-     * @param sum
-     * @return
+     * where S = sum
+     */
+    public int countOptimization(int coins[], int sum) {
+        int n = coins.length;
+        // Initialization
+        int[] prev = new int[sum + 1];
+        prev[0] = 1;
+        // Iterative Calls - convert dp[i] as current and dp[i - 1] as prev
+        for (int i = 1; i < n + 1; i++) { // TC: O(N)
+            int[] current = new int[sum + 1];
+            current[0] = 1;
+            for (int j = 1; j < sum + 1; j++) { // TC: O(S)
+                if (coins[i - 1] <= j) {
+                    current[j] = current[j - coins[i - 1]] + prev[j];
+                } else {
+                    current[j] = prev[j];
+                }
+            }
+            prev = current.clone();
+        }
+        return prev[sum];
+    }
+
+    /**
+     * Approach III : Using Tabulation Approach
+     * 
+     * TC: O((N + S) + N x S) ~ O(N x S)
+     * SC: O(N x S)
+     * 
+     * where S = sum
      */
     public int countTabulation(int coins[], int sum) {
         int n = coins.length;
-        int[][] dp = new int[n + 1][sum + 1];
-        // initialization
-        /**
-         * When n = 0, for any weight != 0 we have 0 ways
-         */
-        for (int i = 1; i < sum + 1; i++) {
-            dp[0][i] = 0;
+        // Initialization
+        int[][] dp = new int[n + 1][sum + 1]; // SC: O(N x S)
+        for (int j = 1; j < sum + 1; j++) { // TC: O(S)
+            dp[0][j] = 0;
         }
-        /**
-         * When sum = 0, for any count n of coins, there will be exactly 1 way
-         */
-        for (int i = 0; i < n + 1; i++) {
+        for (int i = 0; i < n + 1; i++) { // TC: O(N)
             dp[i][0] = 1;
         }
-        // iterative code
-        for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < sum + 1; j++) {
-                // convert (n, sum) as (i, j)
+        // Iterative Calls - convert (n, sum) to (i, j)
+        for (int i = 1; i < n + 1; i++) { // TC: O(N)
+            for (int j = 1; j < sum + 1; j++) { // TC: O(S)
                 if (coins[i - 1] <= j) {
                     dp[i][j] = dp[i][j - coins[i - 1]] + dp[i - 1][j];
                 } else {
@@ -56,111 +79,100 @@ public class Coin_Change_Count_Ways {
                 }
             }
         }
-        // return the last cell of dp
         return dp[n][sum];
     }
 
     /**
-     * Using Memoization
+     * Approach II : Using Memoization Approach
      * 
-     * TC: O(N x W + N)
-     * SC: O(N x W + N)
+     * TC: O(N x S)
+     * SC: O(N x S + N)
      * 
-     * @param coins
-     * @param sum
-     * @return
+     * where S = sum
      */
     public int countMemoization(int coins[], int sum) {
         int n = coins.length;
-        int[][] memo = new int[n + 1][sum + 1];
+        int[][] memo = new int[n + 1][sum + 1]; // SC: O(N x S)
         for (int[] memoItem : memo) {
             Arrays.fill(memoItem, -1);
         }
-        return solveMemoization(coins, sum, n, memo);
+        return solveMemoization(n, coins, sum, memo);
     }
 
     /**
      * Using Memoization
      * 
-     * This problem is similar to knapsack subset-sum problem
+     * This problem is similar to unbounded knapsack problem
      * 
-     * TC: O(N x W)
-     * SC: O(N x W + N)
-     * 
-     * @param coins
-     * @param w
-     * @param n
-     * @paran memo
-     * @return
+     * TC: O(N x S)
+     * SC: O(N)
      */
-    private int solveMemoization(int[] coins, int w, int n, int[][] memo) {
-        // Base case
-        if (n == 0 && w == 0) {
+    private int solveMemoization(int n, int[] coins, int sum, int[][] memo) {
+        // Base Case
+        if (sum == 0 && n == 0) {
             return 1;
-        } else if (n == 0 && w != 0) {
+        }
+        if (sum == 0 && n != 0) {
+            return 1;
+        }
+        if (sum != 0 && n == 0) {
             return 0;
-        } else if (n != 0 && w == 0) {
-            return 1;
         }
-        // Memoization call
-        if (memo[n][w] != -1) {
-            return memo[n][w];
+        // Memoization Check
+        if (memo[n][sum] != -1) {
+            return memo[n][sum];
         }
-        // Recursion calls
-        if (coins[n - 1] <= w) {
-            // we have two choices whether to pick or not pick a coin
-            int pick = solveMemoization(coins, w - coins[n - 1], n, memo);
-            // we can pick multiple times any coin
-            int notpick = solveMemoization(coins, w, n - 1, memo);
-            return memo[n][w] = pick + notpick;
+        // Recursion Calls
+        if (coins[n - 1] <= sum) {
+            // we have two choices - pick and not pick
+            int pick = solveMemoization(n, coins, sum - coins[n - 1], memo); // infinite supply
+            int notpick = solveMemoization(n - 1, coins, sum, memo);
+            return memo[n][sum] = pick + notpick;
         } else {
-            // we cannot pick this coin
-            return memo[n][w] = solveMemoization(coins, w, n - 1, memo);
+            // we don't have an option to pick here
+            return memo[n][sum] = solveMemoization(n - 1, coins, sum, memo);
         }
     }
 
     /**
-     * Using Recursion
+     * Approach I : Using Recursion Approach
      * 
      * TC: O(2 ^ N)
-     * SC: O(2 ^ N)
-     * 
-     * @param coins
-     * @param sum
-     * @return
+     * SC: O(N)
      */
     public int countRecursion(int coins[], int sum) {
         int n = coins.length;
-        return solveRecursion(coins, sum, n);
+        return solveRecursion(n, coins, sum);
     }
 
     /**
      * Using Recursion
      * 
-     * This problem is similar to knapsack subset-sum problem
+     * This problem is similar to unbounded knapsack problem
      * 
      * TC: O(2 ^ N)
-     * SC: O(2 ^ N)
+     * SC: O(N)
      */
-    private int solveRecursion(int[] coins, int w, int n) {
-        // Base case
-        if (n == 0 && w == 0) {
-            return 1;
-        } else if (n == 0 && w != 0) {
-            return 0;
-        } else if (n != 0 && w == 0) {
+    private int solveRecursion(int n, int[] coins, int sum) {
+        // Base Case
+        if (sum == 0 && n == 0) {
             return 1;
         }
-        // Recursion calls
-        if (coins[n - 1] <= w) {
-            // we have two choices whether to pick or not pick a coin
-            int pick = solveRecursion(coins, w - coins[n - 1], n);
-            // we can pick multiple times any coin
-            int notpick = solveRecursion(coins, w, n - 1);
+        if (sum == 0 && n != 0) {
+            return 1;
+        }
+        if (sum != 0 && n == 0) {
+            return 0;
+        }
+        // Recursion Calls
+        if (coins[n - 1] <= sum) {
+            // we have two choices - pick and not pick
+            int pick = solveRecursion(n, coins, sum - coins[n - 1]); // infinite supply
+            int notpick = solveRecursion(n - 1, coins, sum);
             return pick + notpick;
         } else {
-            // we cannot pick this coin
-            return solveRecursion(coins, w, n - 1);
+            // we don't have an option to pick here
+            return solveRecursion(n - 1, coins, sum);
         }
     }
 }
