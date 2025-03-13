@@ -6,65 +6,85 @@ public class Partition_Equal_Subset_Sum {
     public static void main(String[] args) {
         int arr[] = { 1, 5, 11, 5 };
 
+        boolean hasEqualSumPartitionRecursion = equalPartitionRecursion(arr);
+        System.out.println(hasEqualSumPartitionRecursion);
+
         boolean hasEqualSumPartitionMemoization = equalPartitionMemoization(arr);
         System.out.println(hasEqualSumPartitionMemoization);
 
         boolean hasEqualSumPartitionTabulation = equalPartitionTabulation(arr);
         System.out.println(hasEqualSumPartitionTabulation);
+
+        boolean hasEqualSumPartitionOptimization = equalPartitionOptimization(arr);
+        System.out.println(hasEqualSumPartitionOptimization);
     }
 
     /**
-     * Using DP Approach
+     * Approach IV : Using Space Optimization Approach
      *
-     * TC: O(N x T + N)
-     * SC: O(N x T)
-     * where T = sum
-     * 
-     * @param arr
-     * @return
+     * TC: O(N x T)
+     * SC: O(2 x T) ~ O(T)
      */
-    private static boolean equalPartitionTabulation(int arr[]) {
+    static boolean equalPartitionOptimization(int arr[]) {
         int n = arr.length;
         int sum = 0;
         for (int i = 0; i < n; i++) { // TC: O(N)
             sum += arr[i];
         }
         if (sum % 2 != 0) {
-            // sum is odd so equal partition is not possible
+            // odd sum cannot be partioned to form two equal sum subsets
             return false;
         }
         int target = sum / 2;
-        return isSubsetSumTabulation(arr, n, target); // TC: O(N x T), SC: O(N x T)
+        // Initialization
+        boolean[] prev = new boolean[target + 1]; // SC: O(T)
+        prev[0] = true;
+        // Iterative Calls - convert dp[i] as current and dp[i - 1] as prev
+        for (int i = 1; i < n + 1; i++) { // TC: O(N)
+            boolean[] current = new boolean[target + 1]; // SC: O(T)
+            current[0] = true;
+            for (int j = 1; j < target + 1; j++) { // TC: O(T)
+                if (arr[i - 1] <= j) {
+                    current[j] = prev[j - arr[i - 1]] || prev[j];
+                } else {
+                    current[j] = prev[j];
+                }
+            }
+            prev = current.clone();
+        }
+        return prev[target];
     }
 
     /**
-     * Using DP Approach (Tabulation)
+     * Approach III : Using Tabulation Approach
      *
-     * TC: O(N x T)
+     * TC: O((T + N) + N x T) ~ O(N x T)
      * SC: O(N x T)
-     * where T = sum
-     * 
-     * @param arr
-     * @param n
-     * @param sum
-     * @return
      */
-    private static boolean isSubsetSumTabulation(int[] arr, int n, int sum) {
-        boolean[][] dp = new boolean[n + 1][sum + 1];
-
-        // intialization
-        /**
-         * 0th row all cells are by-default false so we need to
-         * intialize all cells of 0th column as true
-         */
+    static boolean equalPartitionTabulation(int arr[]) {
+        int n = arr.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            sum += arr[i];
+        }
+        if (sum % 2 != 0) {
+            // odd sum cannot be partioned to form two equal sum subsets
+            return false;
+        }
+        int target = sum / 2;
+        boolean[][] dp = new boolean[n + 1][target + 1]; // SC: O(N x T)
+        // Initialization
+        for (int j = 1; j < target + 1; j++) { // TC: O(T)
+            // if number of elements is 0 then sum > 0 is not possible
+            dp[0][j] = false;
+        }
         for (int i = 0; i < n + 1; i++) { // TC: O(N)
+            // if sum is 0 then with any number of elements it is possible to get sum 0
             dp[i][0] = true;
         }
-
-        // iterative call - sub-problems
-        for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < sum + 1; j++) {
-                // transform (n, sum) as (i , j)
+        // Iterative Calls - convert (n, target) to (i, j)
+        for (int i = 1; i < n + 1; i++) { // TC: O(N)
+            for (int j = 1; j < target + 1; j++) { // TC: O(T)
                 if (arr[i - 1] <= j) {
                     dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
                 } else {
@@ -72,20 +92,14 @@ public class Partition_Equal_Subset_Sum {
                 }
             }
         }
-
-        // return the answer of problem
-        return dp[n][sum];
+        return dp[n][target];
     }
 
     /**
-     * Using DP Approach
+     * Approach II : Using Memoization Approach
      *
-     * TC: O(N x T + N)
+     * TC: O(N + N x T) ~ O(N x T)
      * SC: O(N x T + N)
-     * where T = sum
-     * 
-     * @param arr
-     * @return
      */
     static boolean equalPartitionMemoization(int arr[]) {
         int n = arr.length;
@@ -94,70 +108,96 @@ public class Partition_Equal_Subset_Sum {
             sum += arr[i];
         }
         if (sum % 2 != 0) {
-            // sum is odd so equal partition is not possible
+            // odd sum cannot be partioned to form two equal sum subsets
             return false;
         }
         int target = sum / 2;
-        return isSubsetSumMemoization(arr, n, target); // TC: O(N x T), SC: O(N x T + N)
-    }
-
-    /**
-     * Using DP Approach (Memoization)
-     *
-     * TC: O(N x T)
-     * SC: O(N x T + N)
-     * where T = sum
-     * 
-     * @param arr
-     * @param n
-     * @param sum
-     * @return
-     */
-    private static boolean isSubsetSumMemoization(int[] arr, int n, int sum) {
-        int[][] dp = new int[n + 1][sum + 1];
-        for (int[] dp1D : dp) {
-            Arrays.fill(dp1D, -1);
+        int[][] memo = new int[n + 1][target + 1]; // SC: O(N x T)
+        for (int[] memoItem : memo) {
+            Arrays.fill(memoItem, -1);
         }
-        return solveMemoization(arr, n, sum, dp);
+        // now the problem gets converted to subset sum problem where target = sum / 2
+        return solveMemoization(n, arr, target, memo);
     }
 
     /**
-     * Using Memoization
+     * Using Memoization Approach
      *
      * TC: O(N x T)
-     * SC: O(N x T + N)
-     * where T = target
-     * 
-     * @param arr
-     * @param n
-     * @param sum
-     * @param dp
-     * @return
+     * SC: O(N)
      */
-    private static boolean solveMemoization(int[] arr, int n, int sum, int[][] dp) {
-        // Base case
-        if (sum == 0) {
+    private static boolean solveMemoization(int n, int[] arr, int target, int[][] memo) {
+        // Base Case
+        if (target == 0) {
             return true;
         }
-        if (n == 0 && sum != 0) {
+        if (n == 0) {
             return false;
         }
-        // memoization call
-        if (dp[n][sum] != -1) {
-            return dp[n][sum] == 1;
+        // Memoization Check
+        if (memo[n][target] != -1) {
+            return memo[n][target] == 1;
         }
-        // recursion call
-        if (arr[n - 1] <= sum) {
-            // we have two options whether to pick or notpick
-            boolean optionOne = solveMemoization(arr, n - 1, sum - arr[n - 1], dp) ||
-                    solveMemoization(arr, n - 1, sum, dp);
-            dp[n][sum] = optionOne ? 1 : 0;
-            return optionOne;
+        // Recursive Calls
+        if (arr[n - 1] <= target) {
+            // we have options to pick or not pick
+            Boolean pick = solveMemoization(n - 1, arr, target - arr[n - 1], memo);
+            Boolean notpick = solveMemoization(n - 1, arr, target, memo);
+            Boolean result = pick || notpick;
+            memo[n][target] = result ? 1 : 0;
+            return result;
         } else {
-            // we cannot choose this option
-            boolean optionTwo = solveMemoization(arr, n - 1, sum, dp);
-            dp[n][sum] = optionTwo ? 1 : 0;
-            return optionTwo;
+            // we don't have an option to pick anyways
+            Boolean result = solveMemoization(n - 1, arr, target, memo);
+            memo[n][target] = result ? 1 : 0;
+            return result;
+        }
+    }
+
+    /**
+     * Approach I : Using Recursion Approach
+     *
+     * TC: O(N + 2 ^ N) ~ O(2 ^ N)
+     * SC: O(N)
+     */
+    static boolean equalPartitionRecursion(int arr[]) {
+        int n = arr.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) { // TC: O(N)
+            sum += arr[i];
+        }
+        if (sum % 2 != 0) {
+            // odd sum cannot be partioned to form two equal sum subsets
+            return false;
+        }
+        int target = sum / 2;
+        // now the problem gets converted to subset sum problem where target = sum / 2
+        return solveRecursion(n, arr, target);
+    }
+
+    /**
+     * Using Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     */
+    private static boolean solveRecursion(int n, int[] arr, int target) {
+        // Base Case
+        if (target == 0) {
+            return true;
+        }
+        if (n == 0) {
+            return false;
+        }
+        // Recursive Calls
+        if (arr[n - 1] <= target) {
+            // we have options to pick or not pick
+            Boolean pick = solveRecursion(n - 1, arr, target - arr[n - 1]);
+            Boolean notpick = solveRecursion(n - 1, arr, target);
+            return pick || notpick;
+        } else {
+            // we don't have an option to pick anyways
+            return solveRecursion(n - 1, arr, target);
         }
     }
 }
