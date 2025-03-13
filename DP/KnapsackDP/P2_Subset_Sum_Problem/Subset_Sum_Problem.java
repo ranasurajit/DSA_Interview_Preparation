@@ -14,50 +14,108 @@ public class Subset_Sum_Problem {
 
         boolean hasSubsetSumTabulation = isSubsetSumTabulation(arr, target);
         System.out.println(hasSubsetSumTabulation);
+
+        boolean hasSubsetSumOptimization = isSubsetSumOptimization(arr, target);
+        System.out.println(hasSubsetSumOptimization);
     }
 
     /**
-     * Using DP Approach (Tabulation)
+     * Approach IV : Using Space Optimization Approach
      *
      * TC: O(N x T)
-     * SC: O(N x T)
+     * SC: O(2 x T) ~ O(T)
+     * 
      * where T = target
      */
-    private static boolean isSubsetSumTabulation(int arr[], int target) {
+    static Boolean isSubsetSumOptimization(int arr[], int target) {
         int n = arr.length;
-        /**
-         * creating dp array with states 'n' and 'target'
-         * as they are variables denoting state changes
-         */
-        // initialization
-        Boolean[][] dp = new Boolean[n + 1][target + 1];
+        // Initialization
+        Boolean[] prev = new Boolean[target + 1]; // SC: O(T)
+        Arrays.fill(prev, false);
+        prev[0] = true;
+        // Iterative Calls - convert dp[i] to current and dp[i - 1] to prev
+        for (int i = 1; i < n + 1; i++) { // TC: O(N)
+            Boolean[] current = new Boolean[target + 1]; // SC: O(T)
+            Arrays.fill(current, false);
+            current[0] = true;
+            for (int j = 1; j < target + 1; j++) { // TC: O(T)
+                if (arr[i - 1] <= j) {
+                    current[j] = prev[j - arr[i - 1]] || prev[j];
+                } else {
+                    current[j] = prev[j];
+                }
+            }
+            prev = current.clone();
+        }
+        return prev[target];
+    }
 
-        // convert base case into initialization of 'dp' array
-        /**
-         * For row i = 0, where i denotes number of elements of array 'arr'
-         * for any sum we cannot have any subsets that can fulfill the rule
-         * so dp[0][0 to target] = false
-         * 
-         * For col j = 0, we need target = 0 for any number of elements of array 'arr'
-         * so that can be done by {} empty array
-         * so dp[0 to n][0] = true
-         */
-        // fill 0th row cells as False
-        Arrays.fill(dp[0], false);
-        // fill 0th column cells as True
-        for (int i = 0; i < n + 1; i++) {
+    static boolean subsetSumToK(int n, int k, int[] arr) {
+        // Create an array to store the previous row of the DP table
+        boolean prev[] = new boolean[k + 1];
+
+        // Initialize the first row of the DP table
+        prev[0] = true;
+
+        // Initialize the first column of the DP table
+        if (arr[0] <= k) {
+            prev[arr[0]] = true;
+        }
+
+        // Fill in the DP table using bottom-up approach
+        for (int ind = 1; ind < n; ind++) {
+            // Create an array to store the current row of the DP table
+            boolean cur[] = new boolean[k + 1];
+
+            // Initialize the first column of the current row
+            cur[0] = true;
+
+            for (int target = 1; target <= k; target++) {
+                // Calculate if the current target can be achieved without taking the current
+                // element
+                boolean notTaken = prev[target];
+
+                // Calculate if the current target can be achieved by taking the current element
+                boolean taken = false;
+                if (arr[ind] <= target) {
+                    taken = prev[target - arr[ind]];
+                }
+
+                // Store the result in the current row of the DP table
+                cur[target] = notTaken || taken;
+            }
+
+            // Update the previous row with the current row
+            prev = cur;
+        }
+
+        // The final result is stored in the last cell of the previous row
+        return prev[k];
+    }
+
+    /**
+     * Approach III : Using Tabulation Approach
+     *
+     * TC: O((N + T) + N x T) ~ O(N x T)
+     * SC: O(N x T)
+     * 
+     * where T = target
+     */
+    static Boolean isSubsetSumTabulation(int arr[], int target) {
+        int n = arr.length;
+        Boolean[][] dp = new Boolean[n + 1][target + 1]; // SC: O(N x T)
+        // Initialization
+        for (int j = 1; j < target + 1; j++) { // TC: O(T)
+            // if number of elements is 0 then sum > 0 is not possible
+            dp[0][j] = false;
+        }
+        for (int i = 0; i < n + 1; i++) { // TC: O(N)
+            // if sum is 0 then with any number of elements it is possible to get sum 0
             dp[i][0] = true;
         }
-        /**
-         * Now let's fill out the rest of the 'dp' array with values from recursive
-         * code to iterative code
-         * 
-         * Note: transform (n, target) as (i , j)
-         */
-        // iterative code
-        for (int i = 1; i < n + 1; i++) {
-            for (int j = 1; j < target + 1; j++) {
-                // transform (n, target) as (i , j)
+        // Iterative Calls - convert (n, target) to (i, j)
+        for (int i = 1; i < n + 1; i++) { // TC: O(N)
+            for (int j = 1; j < target + 1; j++) { // TC: O(T)
                 if (arr[i - 1] <= j) {
                     dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
                 } else {
@@ -69,93 +127,90 @@ public class Subset_Sum_Problem {
     }
 
     /**
-     * Using DP Approach (Memoization)
+     * Approach II : Using Memoization Approach
      *
      * TC: O(N x T)
      * SC: O(N x T + N)
+     * 
      * where T = target
      */
-    private static boolean isSubsetSumMemoization(int arr[], int target) {
+    static Boolean isSubsetSumMemoization(int arr[], int target) {
         int n = arr.length;
-        /**
-         * creating dp array with states 'n' and 'target'
-         * as they are variables denoting state changes
-         * and intializing all with -1
-         */
-        int[][] dp = new int[n + 1][target + 1];
-        for (int[] dp1D : dp) {
-            Arrays.fill(dp1D, -1);
+        int[][] memo = new int[n + 1][target + 1]; // SC: O(N x T)
+        for (int[] memoItem : memo) {
+            Arrays.fill(memoItem, -1);
         }
-        return solveMemoization(arr, target, n, dp);
+        return solveMemoization(n, arr, target, memo);
     }
 
     /**
-     * Using Memoization
+     * Using Memoization Approach
      *
      * TC: O(N x T)
-     * SC: O(N x T + N)
-     * where T = target
+     * SC: O(N)
      */
-    private static Boolean solveMemoization(int[] arr, int target, int n, int[][] dp) {
-        // Base case
+    private static Boolean solveMemoization(int n, int[] arr, int target, int[][] memo) {
+        // Base Case
         if (target == 0) {
             return true;
         }
-        if (n == 0 && target != 0) {
+        if (n == 0) {
             return false;
         }
-        // memoization call
-        if (dp[n][target] != -1) {
-            return dp[n][target] == 1;
+        // Memoization Check
+        if (memo[n][target] != -1) {
+            return memo[n][target] == 1;
         }
-        // recursion call
+        // Recursive Calls
         if (arr[n - 1] <= target) {
-            // we have choice to pick or not pick
-            Boolean optionOne = (solveMemoization(arr, target - arr[n - 1], n - 1, dp)
-                    ||
-                    solveMemoization(arr, target, n - 1, dp));
-            dp[n][target] = optionOne ? 1 : 0;
-            return optionOne;
+            // we have options to pick or not pick
+            Boolean pick = solveMemoization(n - 1, arr, target - arr[n - 1], memo);
+            Boolean notpick = solveMemoization(n - 1, arr, target, memo);
+            Boolean result = pick || notpick;
+            memo[n][target] = result ? 1 : 0;
+            return result;
         } else {
-            Boolean optionTwo = solveMemoization(arr, target, n - 1, dp);
-            dp[n][target] = optionTwo ? 1 : 0;
-            return optionTwo;
+            // we don't have an option to pick anyways
+            Boolean result = solveMemoization(n - 1, arr, target, memo);
+            memo[n][target] = result ? 1 : 0;
+            return result;
         }
-    }
-
-    private static boolean isSubsetSumRecursion(int arr[], int target) {
-        int n = arr.length;
-        return solveRecursion(n - 1, arr, target);
     }
 
     /**
-     * Using Recursion
+     * Approach I : Using Recursion Approach
      *
      * TC: O(2 ^ N)
-     * SC: O(2 ^ N)
+     * SC: O(N)
      */
-    private static Boolean solveRecursion(int index, int arr[], int target) {
-        // base case
+    static Boolean isSubsetSumRecursion(int arr[], int target) {
+        int n = arr.length;
+        return solveRecursion(n, arr, target);
+    }
+
+    /**
+     * Using Recursion Approach
+     *
+     * TC: O(2 ^ N)
+     * SC: O(N)
+     */
+    private static Boolean solveRecursion(int n, int[] arr, int target) {
+        // Base Case
         if (target == 0) {
             return true;
         }
-        if (index == 0) {
-            return arr[0] == target;
+        if (n == 0) {
+            return false;
         }
-        /**
-         * if element at index of arr is <= target then only we have two
-         * choices
-         * 
-         * 1. pick
-         * 2. not pick
-         */
-        if (arr[index] <= target) {
-            // pick || not pick
-            return solveRecursion(index - 1, arr, target - arr[index]) ||
-                    solveRecursion(index - 1, arr, target);
+        // Recursive Calls
+        if (arr[n - 1] <= target) {
+            // we have options to pick or not pick
+            Boolean pick = solveRecursion(n - 1, arr, target - arr[n - 1]);
+            Boolean notpick = solveRecursion(n - 1, arr, target);
+            return pick || notpick;
         } else {
-            // we have no option to pick it
-            return solveRecursion(index - 1, arr, target);
+            // we don't have an option to pick anyways
+            return solveRecursion(n - 1, arr, target);
         }
     }
 }
