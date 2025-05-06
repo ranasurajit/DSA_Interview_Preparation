@@ -1,12 +1,35 @@
-<h2><a href="https://www.geeksforgeeks.org/problems/powx-n/1">Implement Pow</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">Implement the function <strong>power(b, e)</strong>, which calculates <strong>b</strong> raised to the power of <strong>e</strong> (i.e. b<sup>e</sup>).</span></p>
-<p><span style="font-size: 14pt;"><strong>Examples:</strong></span></p>
-<pre><span style="font-size: 14pt;"><strong>Input:</strong> b = 3.00000, e = 5</span><br><span style="font-size: 14pt;"><strong>Output:</strong> 243.00000</span></pre>
-<pre><span style="font-size: 14pt;"><strong>Input:</strong> b = 0.55000, e = 3</span><br><span style="font-size: 14pt;"><strong>Output:</strong> 0.16638</span></pre>
-<pre><span style="font-size: 14pt;"><strong>Input:</strong> b = -0.67000, e = -7</span><br><span style="font-size: 14pt;"><strong>Output:</strong> -16.49971</span></pre>
-<p><span style="font-size: 14pt;"><strong>Constraints:</strong></span></p>
+<h2><a href="https://leetcode.com/problems/powx-n">Pow(x, n)</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>Implement <a href="http://www.cplusplus.com/reference/valarray/pow/" target="_blank">pow(x, n)</a>, which calculates <code>x</code> raised to the power <code>n</code> (i.e., <code>x<sup>n</sup></code>).</p>
+
+<p>&nbsp;</p>
+<p><strong class="example">Example 1:</strong></p>
+
+<pre>
+<strong>Input:</strong> x = 2.00000, n = 10
+<strong>Output:</strong> 1024.00000
+</pre>
+
+<p><strong class="example">Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> x = 2.10000, n = 3
+<strong>Output:</strong> 9.26100
+</pre>
+
+<p><strong class="example">Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> x = 2.00000, n = -2
+<strong>Output:</strong> 0.25000
+<strong>Explanation:</strong> 2<sup>-2</sup> = 1/2<sup>2</sup> = 1/4 = 0.25
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
 <ul>
-<li><span style="font-size: 14pt;">-100.0 &lt; b &lt; 100.0</span></li>
-<li><span style="font-size: 14pt;">-10<sup>9</sup> &lt;= e &lt;= 10<sup>9</sup></span></li>
-<li><span style="font-size: 14pt;">Either b is not zero or e &gt; 0.</span></li>
-<li><span style="font-size: 14pt;">-10<sup>4</sup> &lt;= b<sup>e</sup> &lt;= 10<sup>4</sup></span></li>
-</ul></div>
+	<li><code>-100.0 &lt; x &lt; 100.0</code></li>
+	<li><code>-2<sup>31</sup> &lt;= n &lt;= 2<sup>31</sup>-1</code></li>
+	<li><code>n</code> is an integer.</li>
+	<li>Either <code>x</code> is not zero or <code>n &gt; 0</code>.</li>
+	<li><code>-10<sup>4</sup> &lt;= x<sup>n</sup> &lt;= 10<sup>4</sup></code></li>
+</ul>

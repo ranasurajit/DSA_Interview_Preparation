@@ -4,36 +4,46 @@ public class Implement_Pow {
     public static void main(String[] args) {
         Implement_Pow solution = new Implement_Pow();
 
-        double b = -0.67000;
-        int e = -7;
+        double x = 2.00000;
+        int n = -2;
 
-        double pow = solution.power(b, e);
+        double pow = solution.myPow(x, n);
         System.out.println(pow);
     }
 
     /**
-     * Using Recursion
-     * 
-     * TC: O(log(E))
-     * SC: O(log(E))
-     * 
-     * @param b
-     * @param e
-     * @return
+     * Approach : Using Recursion Approach
+     *
+     * TC: O(log(N))
+     * SC: O(log(N))
      */
-    double power(double b, int e) {
-        if (e == 0) {
+    public double myPow(double x, int n) {
+        if (n < 0) {
+            return 1 / fastPow(x, -1 * n);
+        }
+        return fastPow(x, n);
+    }
+
+    /**
+     * TC: O(log(N))
+     * SC: O(log(N))
+     */
+    private double fastPow(double x, int n) {
+        // Base Case
+        if (n == 0 || x == 1) {
             return 1.0;
         }
-        if (e < 0) {
-            return 1 / power(b, -1 * e);
+        if (n == 1) {
+            return x;
         }
-        double half = power(b, e / 2);
-        double answer = half * half;
-        if ((e & 1) == 1) {
-            // odd
-            answer = b * answer;
+        // Hypothesis
+        double pow = fastPow(x, n / 2);
+        // Induction
+        double ans = pow * pow;
+        if ((n & 1) == 1) {
+            // odd power
+            ans = x * ans;
         }
-        return answer;
+        return ans;
     }
 }
