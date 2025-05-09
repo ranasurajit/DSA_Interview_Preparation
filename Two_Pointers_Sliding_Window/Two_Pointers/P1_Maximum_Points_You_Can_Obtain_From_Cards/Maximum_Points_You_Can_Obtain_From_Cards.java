@@ -1,4 +1,4 @@
-package Two_Pointers_Sliding_Window.P1_Maximum_Points_You_Can_Obtain_From_Cards;
+package Two_Pointers_Sliding_Window.Two_Pointers.P1_Maximum_Points_You_Can_Obtain_From_Cards;
 
 public class Maximum_Points_You_Can_Obtain_From_Cards {
     public static void main(String[] args) {
