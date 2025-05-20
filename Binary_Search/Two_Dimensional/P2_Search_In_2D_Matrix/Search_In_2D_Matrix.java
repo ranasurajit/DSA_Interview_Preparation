@@ -7,23 +7,23 @@ public class Search_In_2D_Matrix {
         int[][] matrix1 = { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 60 } };
         int target1 = 3;
 
-        boolean isFound1 = solution.searchMatrixApproachI(matrix1, target1);
+        boolean isFound1 = solution.searchMatrixBetter(matrix1, target1);
         System.out.println(isFound1);
 
         int[][] matrix2 = { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 60 } };
         int target2 = 12;
 
-        boolean isFound2 = solution.searchMatrixApproachI(matrix2, target2);
+        boolean isFound2 = solution.searchMatrixOptimal(matrix2, target2);
         System.out.println(isFound2);
     }
 
     /**
      * Approach II : Using Binary Search On Cells Approach
      *
-     * TC: TC: O(log(M x N))
+     * TC: O(log(M x N))
      * SC: O(1)
      */
-    public boolean searchMatrix(int[][] matrix, int target) {
+    public boolean searchMatrixOptimal(int[][] matrix, int target) {
         int m = matrix.length;
         int n = matrix[0].length;
         int low = 0;
@@ -50,7 +50,7 @@ public class Search_In_2D_Matrix {
      * TC: O(M x log(N))
      * SC: O(1)
      */
-    public boolean searchMatrixApproachI(int[][] matrix, int target) {
+    public boolean searchMatrixBetter(int[][] matrix, int target) {
         int m = matrix.length;
         int n = matrix[0].length;
         for (int i = 0; i < m; i++) { // TC: O(M)
