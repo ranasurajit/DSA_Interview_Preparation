@@ -22,7 +22,7 @@ public class Minimum_Number_Of_Days_To_Make_M_Bouquets {
     /**
      * Approach : Using Binary Search on Answers Approach
      * 
-     * TC: O(N + log(Max(bloomDay) - Min(bloomDay)))
+     * TC: O(N x log(Max(bloomDay) - Min(bloomDay)))
      * SC: O(1)
      * 
      * @param bloomDay
