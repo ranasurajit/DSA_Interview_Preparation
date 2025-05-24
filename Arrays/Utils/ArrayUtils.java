@@ -22,4 +22,12 @@ public class ArrayUtils {
         }
         return list;
     }
+
+    public static ArrayList<String> convert1DStringArayToArrayList(String[] arr) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (String val : arr) {
+            list.add(val);
+        }
+        return list;
+    }
 }
