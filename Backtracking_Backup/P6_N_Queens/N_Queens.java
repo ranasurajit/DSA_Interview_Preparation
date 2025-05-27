@@ -1,4 +1,4 @@
-package Backtracking.P6_N_Queens;
+package Backtracking_Backup.P6_N_Queens;
 
 import java.util.ArrayList;
 import java.util.HashSet;
