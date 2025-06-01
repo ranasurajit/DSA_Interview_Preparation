@@ -54,7 +54,13 @@ public class My_Calendar_I {
                     // condition for double booking is encountered so undo map insertion for
                     // interval
                     eventsMap.put(startTime, eventsMap.get(startTime) - 1); // TC: O(log(Q))
+                    if (eventsMap.get(startTime) == 0) {
+                        eventsMap.remove(startTime);
+                    }
                     eventsMap.put(endTime, eventsMap.get(endTime) + 1); // TC: O(log(Q))
+                    if (eventsMap.get(endTime) == 0) {
+                        eventsMap.remove(endTime);
+                    }
                     return false;
                 }
             }
