@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class My_Calendar_I {
-
     public static void main(String[] args) {
         String[] operations = { "MyCalendar", "book", "book", "book" };
         int[][] values = { {}, { 10, 20 }, { 15, 25 }, { 20, 30 } };
