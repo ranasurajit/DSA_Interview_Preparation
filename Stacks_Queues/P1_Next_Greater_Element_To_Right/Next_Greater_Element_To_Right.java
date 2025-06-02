@@ -12,7 +12,7 @@ public class Next_Greater_Element_To_Right {
         System.out.println(nge1);
 
         int[] arr2 = { 50, 40, 30, 10 };
-        ArrayList<Integer> nge2 = solution.nextLargerElementBruteForce(arr2);
+        ArrayList<Integer> nge2 = solution.nextLargerElementOptimal(arr2);
         System.out.println(nge2);
     }
 
