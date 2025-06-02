@@ -1,11 +1,11 @@
-package Stacks_Queues.P1_Next_Greater_Element;
+package Stacks_Queues.P1_Next_Greater_Element_To_Right;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Next_Greater_Element {
+public class Next_Greater_Element_To_Right {
     public static void main(String[] args) {
-        Next_Greater_Element solution = new Next_Greater_Element();
+        Next_Greater_Element_To_Right solution = new Next_Greater_Element_To_Right();
 
         int[] arr1 = { 6, 8, 0, 1, 3 };
         ArrayList<Integer> nge1 = solution.nextLargerElementBruteForce(arr1);
