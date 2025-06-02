@@ -1,18 +1,19 @@
-package Stacks_Queues.P3_Nearest_Smaller_Element_On_Left;
+package Stacks_Queues.P3_Nearest_Smaller_Element_To_Left;
 
+import java.util.Arrays;
 import java.util.Stack;
 
-public class Nearest_Smaller_Element_On_Left {
+public class Nearest_Smaller_Element_To_Left {
     public static void main(String[] args) {
-        Nearest_Smaller_Element_On_Left solution = new Nearest_Smaller_Element_On_Left();
+        Nearest_Smaller_Element_To_Left solution = new Nearest_Smaller_Element_To_Left();
 
         int[] arr1 = { 1, 5, 0, 3, 4, 5 };
         int[] nse1 = solution.leftSmallerBruteForce(arr1);
-        System.out.println(nse1);
+        System.out.println(Arrays.toString(nse1));
 
         int[] arr2 = { 1, 6, 2 };
         int[] nse2 = solution.leftSmallerBruteForce(arr2);
-        System.out.println(nse2);
+        System.out.println(Arrays.toString(nse2));
     }
 
     /**
