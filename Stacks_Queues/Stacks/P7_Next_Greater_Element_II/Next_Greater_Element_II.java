@@ -1,4 +1,4 @@
-package Stacks_Queues.P7_Next_Greater_Element_II;
+package Stacks_Queues.Stacks.P7_Next_Greater_Element_II;
 
 import java.util.Arrays;
 import java.util.Stack;

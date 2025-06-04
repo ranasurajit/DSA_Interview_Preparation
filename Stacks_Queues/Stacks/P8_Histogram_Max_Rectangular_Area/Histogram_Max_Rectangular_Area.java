@@ -1,4 +1,4 @@
-package Stacks_Queues.P8_Histogram_Max_Rectangular_Area;
+package Stacks_Queues.Stacks.P8_Histogram_Max_Rectangular_Area;
 
 import java.util.Stack;
 

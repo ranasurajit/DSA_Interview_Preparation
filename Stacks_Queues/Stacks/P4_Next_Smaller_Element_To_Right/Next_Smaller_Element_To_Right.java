@@ -1,4 +1,4 @@
-package Stacks_Queues.P4_Next_Smaller_Element_To_Right;
+package Stacks_Queues.Stacks.P4_Next_Smaller_Element_To_Right;
 
 import java.util.ArrayList;
 import java.util.Stack;

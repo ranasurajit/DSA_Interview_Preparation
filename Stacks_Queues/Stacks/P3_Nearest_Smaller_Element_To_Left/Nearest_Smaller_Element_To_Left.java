@@ -1,4 +1,4 @@
-package Stacks_Queues.P3_Nearest_Smaller_Element_To_Left;
+package Stacks_Queues.Stacks.P3_Nearest_Smaller_Element_To_Left;
 
 import java.util.Arrays;
 import java.util.Stack;

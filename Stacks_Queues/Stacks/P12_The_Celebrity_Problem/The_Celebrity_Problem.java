@@ -1,4 +1,4 @@
-package Stacks_Queues.P12_The_Celebrity_Problem;
+package Stacks_Queues.Stacks.P12_The_Celebrity_Problem;
 
 public class The_Celebrity_Problem {
     public static void main(String[] args) {

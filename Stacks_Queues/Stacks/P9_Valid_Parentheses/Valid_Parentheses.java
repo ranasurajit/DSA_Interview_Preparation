@@ -1,4 +1,4 @@
-package Stacks_Queues.P9_Valid_Parentheses;
+package Stacks_Queues.Stacks.P9_Valid_Parentheses;
 
 import java.util.Stack;
 

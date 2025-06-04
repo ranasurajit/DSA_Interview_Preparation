@@ -1,14 +1,14 @@
-package Stacks_Queues.P2_Next_Greater_Element_To_Left;
+package Stacks_Queues.Stacks.P1_Next_Greater_Element_To_Right;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Next_Greater_Element_To_Left {
+public class Next_Greater_Element_To_Right {
     public static void main(String[] args) {
-        Next_Greater_Element_To_Left solution = new Next_Greater_Element_To_Left();
+        Next_Greater_Element_To_Right solution = new Next_Greater_Element_To_Right();
 
         int[] arr1 = { 6, 8, 0, 1, 3 };
-        ArrayList<Integer> nge1 = solution.nextLargerElementOptimal(arr1);
+        ArrayList<Integer> nge1 = solution.nextLargerElementBruteForce(arr1);
         System.out.println(nge1);
 
         int[] arr2 = { 50, 40, 30, 10 };
@@ -17,7 +17,7 @@ public class Next_Greater_Element_To_Left {
     }
 
     /**
-     * Approach : Using Stack Approach
+     * Approach II : Using Stack Approach
      * 
      * As we have inner loop j which is dependent on i as j starts from (i + 1) to n
      * so we can reduce the time complexity to Linear O(N) by using Stack
@@ -31,7 +31,7 @@ public class Next_Greater_Element_To_Left {
         ArrayList<Integer> nge = new ArrayList<Integer>();
         int[] result = new int[n]; // SC: O(N)
         Stack<Integer> st = new Stack<Integer>();
-        for (int i = 0; i < n; i++) {
+        for (int i = n - 1; i >= 0; i--) { // TC: O(N)
             if (st.isEmpty()) {
                 result[i] = -1;
             } else {
@@ -46,9 +46,35 @@ public class Next_Greater_Element_To_Left {
             }
             st.push(arr[i]);
         }
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) { // TC: O(N)
             nge.add(result[i]);
         }
+        return nge;
+    }
+
+    /**
+     * Approach I : Using Brute-Force Approach
+     * 
+     * TC: O(N ^ 2)
+     * SC: O(1)
+     */
+    public ArrayList<Integer> nextLargerElementBruteForce(int[] arr) {
+        int n = arr.length;
+        ArrayList<Integer> nge = new ArrayList<Integer>();
+        for (int i = 0; i < n - 1; i++) { // TC: O(N)
+            boolean isFound = false;
+            for (int j = i + 1; j < n; j++) { // TC: O(N)
+                if (arr[j] > arr[i]) {
+                    nge.add(arr[j]);
+                    isFound = true;
+                    break;
+                }
+            }
+            if (!isFound) {
+                nge.add(-1);
+            }
+        }
+        nge.add(-1);
         return nge;
     }
 }

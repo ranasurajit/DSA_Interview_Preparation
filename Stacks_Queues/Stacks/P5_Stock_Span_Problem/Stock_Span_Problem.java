@@ -1,4 +1,4 @@
-package Stacks_Queues.P5_Stock_Span_Problem;
+package Stacks_Queues.Stacks.P5_Stock_Span_Problem;
 
 import java.util.ArrayList;
 import java.util.Stack;

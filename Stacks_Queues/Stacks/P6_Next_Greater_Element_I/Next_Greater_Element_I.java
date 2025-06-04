@@ -1,4 +1,4 @@
-package Stacks_Queues.P6_Next_Greater_Element_I;
+package Stacks_Queues.Stacks.P6_Next_Greater_Element_I;
 
 import java.util.Arrays;
 import java.util.HashMap;

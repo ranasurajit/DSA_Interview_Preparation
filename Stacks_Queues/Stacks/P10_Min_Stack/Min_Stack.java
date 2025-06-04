@@ -1,4 +1,4 @@
-package Stacks_Queues.P10_Min_Stack;
+package Stacks_Queues.Stacks.P10_Min_Stack;
 
 import java.util.ArrayList;
 import java.util.List;

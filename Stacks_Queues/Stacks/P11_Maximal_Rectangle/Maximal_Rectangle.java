@@ -1,4 +1,4 @@
-package Stacks_Queues.P11_Maximal_Rectangle;
+package Stacks_Queues.Stacks.P11_Maximal_Rectangle;
 
 import java.util.Stack;
 
