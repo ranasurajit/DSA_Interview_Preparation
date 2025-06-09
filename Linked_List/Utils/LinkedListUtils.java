@@ -41,4 +41,23 @@ public class LinkedListUtils {
         System.out.print("NULL");
         System.out.println();
     }
+
+    public static void createCycle(ListNode head, int index) {
+        if (index < 0) {
+            return;
+        }
+        ListNode tail = null;
+        ListNode current = head;
+        ListNode cycleNode = null;
+        int count = 0;
+        while (current != null) {
+            if (count == index) {
+                cycleNode = current;
+            }
+            tail = current;
+            current = current.next;
+            count++;
+        }
+        tail.next = cycleNode;
+    }
 }
