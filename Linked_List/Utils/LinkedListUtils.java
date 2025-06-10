@@ -60,4 +60,44 @@ public class LinkedListUtils {
         }
         tail.next = cycleNode;
     }
+
+    /**
+     * This method takes two linked lists and makes them intersect at the first node
+     * in listA with the given value.
+     */
+    public static void makeIntersectionAtValue(ListNode headA, ListNode headB, int valToIntersectAt) {
+        if (headA == null || headB == null)
+            return;
+
+        // Step 1: Find the node in listA with the value `valToIntersectAt`
+        ListNode target = headA;
+        while (target != null && target.val != valToIntersectAt) {
+            target = target.next;
+        }
+
+        if (target == null) {
+            System.out.println("Value " + valToIntersectAt + " not found in List A.");
+            return;
+        }
+
+        // Step 2: Find the last node in listB before intersection should happen
+        ListNode curr = headB;
+        while (curr != null && curr.next != null) {
+            curr = curr.next;
+        }
+
+        // Step 3: Point the last node of B (currently with a different 7) to target
+        // But to ensure intersection starts from 5, we want to truncate B at 8 and
+        // point it to A's 5
+        ListNode prev = null;
+        curr = headB;
+        while (curr != null && curr.val != valToIntersectAt) {
+            prev = curr;
+            curr = curr.next;
+        }
+
+        if (prev != null) {
+            prev.next = target; // Connect B's last unique node (8) to A's 5
+        }
+    }
 }
