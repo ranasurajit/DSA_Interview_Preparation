@@ -1,5 +1,8 @@
 package Linked_List.Utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LinkedListUtils {
     public static class ListNode {
         public int val;
@@ -99,5 +102,58 @@ public class LinkedListUtils {
         if (prev != null) {
             prev.next = target; // Connect B's last unique node (8) to A's 5
         }
+    }
+
+    /**
+     * Creates a linked list from an array of [val, random_index] pairs.
+     * 
+     * @param data 2D int array where each entry is [val, random_index] or
+     *             random_index == -1 if null
+     * @return Head of the constructed linked list
+     */
+    public static Node buildLinkedList(int[][] data) {
+        if (data == null || data.length == 0)
+            return null;
+
+        // Step 1: Create all nodes
+        Node[] nodes = new Node[data.length];
+        for (int i = 0; i < data.length; i++) {
+            nodes[i] = new Node(data[i][0]);
+        }
+
+        // Step 2: Set next pointers
+        for (int i = 0; i < data.length - 1; i++) {
+            nodes[i].next = nodes[i + 1];
+        }
+
+        // Step 3: Set random pointers
+        for (int i = 0; i < data.length; i++) {
+            int randIndex = data[i][1];
+            nodes[i].random = (randIndex == -1) ? null : nodes[randIndex];
+        }
+
+        // Return the head node
+        return nodes[0];
+    }
+
+    /**
+     * Utility to print the list for debugging purposes.
+     */
+    public static void printListWithRandomPointers(Node head) {
+        Node curr = head;
+        int index = 0;
+        Map<Node, Integer> nodeToIndex = new HashMap<>();
+        int i = 0;
+        for (Node temp = head; temp != null; temp = temp.next) {
+            nodeToIndex.put(temp, i++);
+        }
+
+        while (curr != null) {
+            String randomVal = (curr.random == null) ? "null" : String.valueOf(nodeToIndex.get(curr.random));
+            System.out.println("Node[" + index + "]: val=" + curr.val + ", randomIndex=" + randomVal);
+            curr = curr.next;
+            index++;
+        }
+        System.out.println();
     }
 }
