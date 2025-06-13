@@ -156,4 +156,51 @@ public class LinkedListUtils {
         }
         System.out.println();
     }
+
+    // Function to create a doubly linked list from an array
+    public static DoublyNode createDoublyLinkedList(int[] arr) {
+        if (arr == null || arr.length == 0)
+            return null;
+
+        DoublyNode head = new DoublyNode(arr[0]);
+        DoublyNode current = head;
+
+        for (int i = 1; i < arr.length; i++) {
+            DoublyNode newNode = new DoublyNode(arr[i]);
+            current.next = newNode;
+            newNode.prev = current;
+            current = newNode;
+        }
+
+        return head;
+    }
+
+    // Function to print the list forward
+    public static void printListForward(DoublyNode head) {
+        DoublyNode current = head;
+        while (current != null) {
+            System.out.print(current.data + " <--> ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Function to print the list backward
+    public static void printListBackward(DoublyNode tail) {
+        DoublyNode current = tail;
+        while (current != null) {
+            System.out.print(current.data + " <--> ");
+            current = current.prev;
+        }
+        System.out.println();
+    }
+
+    // Helper to get tail (useful for reverse printing)
+    public static DoublyNode getTail(DoublyNode head) {
+        DoublyNode current = head;
+        while (current != null && current.next != null) {
+            current = current.next;
+        }
+        return current;
+    }
 }
