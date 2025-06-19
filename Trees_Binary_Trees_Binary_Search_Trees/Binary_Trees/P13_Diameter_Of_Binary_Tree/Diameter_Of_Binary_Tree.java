@@ -66,6 +66,7 @@ public class Diameter_Of_Binary_Tree {
         // Hypothesis - Recursion Calls will do the magic
         int leftHeight = solveMemoization(node.left, diameter, memo);
         int rightHeight = solveMemoization(node.right, diameter, memo);
+        // Induction
         // if diameter passes through this node 'node'
         diameter[0] = Math.max(diameter[0], leftHeight + rightHeight);
         // if diameter does not pass through this node 'node' then return the best
@@ -101,6 +102,7 @@ public class Diameter_Of_Binary_Tree {
         // Hypothesis - Recursion Calls will do the magic
         int leftHeight = solveRecursion(node.left, diameter);
         int rightHeight = solveRecursion(node.right, diameter);
+        // Induction
         // if diameter passes through this node 'node'
         diameter[0] = Math.max(diameter[0], leftHeight + rightHeight);
         // if diameter does not pass through this node 'node' then return the best
