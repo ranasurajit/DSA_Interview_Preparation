@@ -2,8 +2,8 @@ package Linked_List.P25_Merge_K_Sorted_Lists;
 
 import java.util.PriorityQueue;
 
-import Linked_List_Backup.Utils.LinkedListUtils;
-import Linked_List_Backup.Utils.LinkedListUtils.ListNode;
+import Linked_List.Utils.LinkedListUtils;
+import Linked_List.Utils.LinkedListUtils.ListNode;
 
 public class Merge_K_Sorted_Lists {
     public static void main(String[] args) {
