@@ -94,7 +94,7 @@ public class Unique_Paths {
     /**
      * Using Memoization Approach
      *
-     * TC: O(2 ^ (M x N))
+     * TC: O(M x N)
      * SC: O((M - 1) + (N - 1)) - recursion stack
      */
     private int solveMemoization(int m, int n, int[][] memo) {
