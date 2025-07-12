@@ -34,8 +34,8 @@ public class Course_Schedule {
         Map<Integer, ArrayList<Integer>> adj = new HashMap<Integer, ArrayList<Integer>>(); // SC: O(V + E)
         int[] indegrees = new int[numCourses]; // SC: O(V)
         for (int[] edge : prerequisites) { // TC: O(E)
-            adj.computeIfAbsent(edge[0], k -> new ArrayList<Integer>()).add(edge[1]);
-            indegrees[edge[1]]++;
+            adj.computeIfAbsent(edge[1], k -> new ArrayList<Integer>()).add(edge[0]);
+            indegrees[edge[0]]++;
         }
         /**
          * we can finish all courses if and only if there's no cyclic dependency,
@@ -72,7 +72,7 @@ public class Course_Schedule {
         // creating Adjacency List
         Map<Integer, ArrayList<Integer>> adj = new HashMap<Integer, ArrayList<Integer>>(); // SC: O(V + E)
         for (int[] edge : prerequisites) { // TC: O(E)
-            adj.computeIfAbsent(edge[0], k -> new ArrayList<Integer>()).add(edge[1]);
+            adj.computeIfAbsent(edge[1], k -> new ArrayList<Integer>()).add(edge[0]);
         }
         /**
          * we can finish all courses if and only if there's no cyclic dependency,
