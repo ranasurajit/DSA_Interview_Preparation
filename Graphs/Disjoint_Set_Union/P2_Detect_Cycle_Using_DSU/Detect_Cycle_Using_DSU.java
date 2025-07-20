@@ -18,7 +18,6 @@ public class Detect_Cycle_Using_DSU {
 
     /**
      * Approach : Using Disjoint-Set (Union By Rank and Find By Path Compression)
-     * Approach
      * 
      * TC: O(V) + O(V + E x α(V)) ~ O(V + E x α(V))
      * SC: O(V) + O(V) + O(V) ~ O(V)
