@@ -32,9 +32,12 @@ public class Implement_Trie_Prefix_Tree {
  * Approach : Using Trie Approach
  * 
  * TC: O(L x N)
- * SC: O(L)
+ * SC: O(K x L)
  *
- * where N = number of queries, L = Max(words) sent as parameter
+ * where 
+ * N = number of queries
+ * L = Average(words) sent as parameter
+ * K = distinct words insert into Trie
  */
 class Trie {
     TrieNode root;
