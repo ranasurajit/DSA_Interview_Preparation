@@ -1,4 +1,4 @@
-package Trie.P5_Longest_Common_Suffix_Queries;
+package Trie_Backup.P5_Longest_Common_Suffix_Queries;
 
 import java.util.Arrays;
 

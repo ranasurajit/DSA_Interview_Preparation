@@ -1,4 +1,4 @@
-package Trie.P2_Longest_Common_Prefix;
+package Trie_Backup.P2_Longest_Common_Prefix;
 
 public class Longest_Common_Prefix {
     public static void main(String[] args) {
