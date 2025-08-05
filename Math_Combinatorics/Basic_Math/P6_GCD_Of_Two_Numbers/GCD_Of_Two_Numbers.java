@@ -11,7 +11,7 @@ public class GCD_Of_Two_Numbers {
 
         int a2 = 60;
         int b2 = 36;
-        int gcd2 = solution.gcdBruteForce(a2, b2);
+        int gcd2 = solution.gcdEulersEuclidean(a2, b2);
         System.out.println(gcd2);
     }
 
