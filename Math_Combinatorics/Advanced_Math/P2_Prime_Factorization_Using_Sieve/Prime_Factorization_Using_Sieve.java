@@ -1,4 +1,4 @@
-package Math_Combinatorics.Basic_Math.P11_Prime_Factorization_Using_Sieve;
+package Math_Combinatorics.Advanced_Math.P2_Prime_Factorization_Using_Sieve;
 
 import java.util.ArrayList;
 import java.util.Arrays;
