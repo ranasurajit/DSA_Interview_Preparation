@@ -30,8 +30,10 @@ public class Prime_Factorization_Using_Sieve {
             primes[1] = 0;
         }
         for (int i = 2; i * i <= num; i++) {
-            for (int j = i * i; j <= num; j += i) {
-                primes[j] = 0;
+            if (primes[i] == 1) {
+                for (int j = i * i; j <= num; j += i) {
+                    primes[j] = 0;
+                }
             }
         }
     }
