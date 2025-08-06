@@ -1,4 +1,4 @@
-package Math_Combinatorics.Basic_Math.P10_Sieve_Of_Eratosthenes;
+package Math_Combinatorics.Advanced_Math.P1_Sieve_Of_Eratosthenes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
